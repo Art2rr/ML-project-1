@@ -87,7 +87,7 @@ for jet in possible_jets:
     w_LR.append(w)
     
     # Regularized Logistic Regression
-    loss, w = reg_logistic_regression(y_data, tx, lambdas[jet], initial_w, max_iters_LR, gamma_LR)
+    loss, w = reg_logistic_regression(y_data, tx, lambdas[jet], initial_w, max_iters_LR, gamma_LR, threshold_LR)
     loss_RLR.append(loss)
     w_RLR.append(w)
 #------------------------------------
