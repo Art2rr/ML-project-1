@@ -1,5 +1,4 @@
 import numpy as np
-import time
 from costs import compute_mse
 from implementations import *
 
@@ -14,6 +13,7 @@ def build_k_indices(y,k_fold,seed):
     
     return np.array(k_indices)
 
+
 def build_poly(x, degree):
     phi = np.zeros([x.shape[0], (degree+1)*x.shape[1]])
     idx = 0
@@ -22,6 +22,7 @@ def build_poly(x, degree):
             phi[:,idx] = x[:,k]**j
             idx += 1
     return phi
+
 
 def cross_validation_degree(y,x,k_indices,k,lambda_,degree):
    
@@ -40,12 +41,11 @@ def cross_validation_degree(y,x,k_indices,k,lambda_,degree):
 
     return loss_train,loss_test
 
+
 def find_hyperparameters(y,x,k,seed=1):
-    
-    current_time = time.time()
-    
-    lambdas = np.logspace(-4,0,10)
-    degrees = range(1,5)
+       
+    lambdas = np.logspace(-2,1,40)
+    degrees = range(1,10)
     
     min_testerror = np.zeros((len(degrees),len(lambdas)))
     k_indices = build_k_indices(y,k,seed)
@@ -53,19 +53,14 @@ def find_hyperparameters(y,x,k,seed=1):
     for idx_degree,degree in enumerate(degrees):    
         for idx_lambda,lambda_ in enumerate(lambdas):
             mse_test_intermediate = []
-            print(degree,lambda_)
-    
+            
             for ii in range(k):
                 loss_tr_ii,loss_te_ii = cross_validation_degree(y,x,k_indices,ii,lambda_,degree)
                 mse_test_intermediate.append(loss_te_ii)
 
             min_testerror[idx_degree,idx_lambda] = np.mean(mse_test_intermediate)
-        
-        print(time.time()-current_time)
-    
-    print(min_testerror)
+            
     best_parameters = np.unravel_index(np.argmin(min_testerror, axis=None), min_testerror.shape)
-    print(best_parameters)
     best_degree = degrees[best_parameters[0]]
     best_lambda = lambdas[best_parameters[1]]
     
@@ -73,7 +68,7 @@ def find_hyperparameters(y,x,k,seed=1):
 
 
 def logistic_cross_validation(y, x, k_indices, k, gamma, lambda_):
-   '''calculates the average loss and accuracy for k folded cross-validation '''
+    '''calculates the average loss and accuracy for k folded cross-validation '''
     train_indices = np.setdiff1d(k_indices,k_indices[k])
     
     x_test = x[k_indices[k],:]
