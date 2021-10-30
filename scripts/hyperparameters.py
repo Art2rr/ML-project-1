@@ -70,3 +70,44 @@ def find_hyperparameters(y,x,k,seed=1):
     best_lambda = lambdas[best_parameters[1]]
     
     return best_degree, best_lambda
+
+
+def logistic_cross_validation(y, x, k_indices, k, gamma, lambda_):
+   '''calculates the average loss and accuracy for k folded cross-validation '''
+    train_indices = np.setdiff1d(k_indices,k_indices[k])
+    
+    x_test = x[k_indices[k],:]
+    x_train = x[train_indices,:]
+    y_test = y[k_indices[k]]
+    y_train = y[train_indices]
+
+    loss_train,w_optimal = logistic_regression_GD(y_train,x_train, gamma, lambda_, max_iter=10000)
+    pred = predict_labels(w_optimal,x_test)
+    pred_bin = np.squeeze(1*np.equal(pred,1))
+    correct = np.sum(1*np.equal(y_test,pred_bin))
+    all_ = np.shape(y_test)[0]
+    acc =  correct/all_
+    print(f"The accuracy is",acc) 
+
+    return loss_train, acc
+
+def logistic_lambda_optimisation(y,x,k,gamma,seed=1):
+    '''finds the optimal value of lambda by performing cross-validation for lambda values from 1e-4 to 1 '''
+    lambdas = np.logspace(-4, 0, 30)
+    k_indices = build_k_indices(y,k,seed)
+    accuracy = []
+    
+    for lambda_ in lambdas:
+        accuracy_intermediate = []
+    
+        for ii in range(k):
+            print(f"Doing fold",ii,"for lambda value",lambda_) 
+            loss_tr_ii, acc_test = logistic_cross_validation(y, x, k_indices, ii, gamma, lambda_)
+            accuracy_intermediate.append(acc_test)
+        
+        accuracy.append(np.mean(accuracy_intermediate))
+    
+    idx_min_acc = np.argmin(accuracy)
+    lambda_optimal = lambdas[idx_min_acc]
+    
+    return lambda_optimal
