@@ -77,7 +77,7 @@ def logistic_regression(y, tx, initial_w, max_iter, gamma, threshold):
         losses.append(loss)
         if len(losses) > 1 and np.abs(losses[-1] - losses[-2]) < threshold:
             break
-    l = calculate_logistic_loss(y, tx, w)
+    l = calculate_loss(y, tx, w)
     #print("Final loss={l}".format(l=calculate_logistic_loss(y, tx, w)))
     return l, w
 
@@ -106,6 +106,6 @@ def reg_logistic_regression(y, tx, lambda_, initial_w, max_iter, gamma, threshol
         losses.append(loss)
         if len(losses) > 1 and np.abs(losses[-1] - losses[-2]) < threshold:
             break
-    l = calculate_logistic_loss(y, tx, w)
+    l = calculate_loss(y, tx, w)
     #print("Final loss={l}".format(l=calculate_logistic_loss(y, tx, w)))
     return l, w
