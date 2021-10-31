@@ -1,6 +1,7 @@
 import numpy as np
 from costs import compute_mse
 from implementations import *
+from proj1_helpers import *
 
 def build_k_indices(y,k_fold,seed):
     
@@ -67,17 +68,25 @@ def find_hyperparameters(y,x,k,seed=1):
     return best_degree, best_lambda
 
 
-def logistic_cross_validation(y, x, k_indices, k, gamma, lambda_):
+def logistic_cross_validation(y, x, k_indices, k, gamma, lambda_, degree):
     '''calculates the average loss and accuracy for k folded cross-validation '''
     train_indices = np.setdiff1d(k_indices,k_indices[k])
+    max_iters_LR = 10000
+    gamma_LR = 0.001
+    threshold_LR = 1e-3
+    
     
     x_test = x[k_indices[k],:]
     x_train = x[train_indices,:]
     y_test = y[k_indices[k]]
     y_train = y[train_indices]
-
-    loss_train,w_optimal = logistic_regression_GD(y_train,x_train, gamma, lambda_, max_iter=10000)
-    pred = predict_labels(w_optimal,x_test)
+    
+    x_train_poly = build_poly(x_train,degree)
+    x_test_poly = build_poly(x_test,degree)
+    initial_w = np.zeros(x_train_poly.shape[1])
+    
+    loss_train,w_optimal = reg_logistic_regression(y_train,x_train_poly,lambda_, initial_w, max_iters_LR, gamma_LR, threshold_LR)
+    pred = predict_labels(w_optimal,x_test_poly)
     pred_bin = np.squeeze(1*np.equal(pred,1))
     correct = np.sum(1*np.equal(y_test,pred_bin))
     all_ = np.shape(y_test)[0]
@@ -86,23 +95,28 @@ def logistic_cross_validation(y, x, k_indices, k, gamma, lambda_):
 
     return loss_train, acc
 
-def logistic_lambda_optimisation(y,x,k,gamma,seed=1):
+def logistic_optimisation(y,x,k,gamma,seed=1):
     '''finds the optimal value of lambda by performing cross-validation for lambda values from 1e-4 to 1 '''
-    lambdas = np.logspace(-4, 0, 30)
+    lambdas = np.logspace(-3,1,5)
+    degrees = range(1,5)
+    
+    
     k_indices = build_k_indices(y,k,seed)
-    accuracy = []
+    min_testerror = np.zeros((len(degrees),len(lambdas)))
     
-    for lambda_ in lambdas:
-        accuracy_intermediate = []
+    for idx_degree,degree in enumerate(degrees):
+        for idx_lambda,lambda_ in enumerate(lambdas):
+            accuracy_intermediate = []
+
+            for ii in range(k):
+                print(f"Doing fold",ii,"for lambda value:",lambda_,"degree:",degree) 
+                loss_tr_ii, acc_test = logistic_cross_validation(y, x, k_indices, ii, gamma, lambda_,degree)
+                accuracy_intermediate.append(acc_test)
+
+            min_testerror[idx_degree,idx_lambda] = np.mean(accuracy_intermediate)
     
-        for ii in range(k):
-            print(f"Doing fold",ii,"for lambda value",lambda_) 
-            loss_tr_ii, acc_test = logistic_cross_validation(y, x, k_indices, ii, gamma, lambda_)
-            accuracy_intermediate.append(acc_test)
-        
-        accuracy.append(np.mean(accuracy_intermediate))
+    best_parameters = np.unravel_index(np.argmin(min_testerror, axis=None), min_testerror.shape)
+    best_degree = degrees[best_parameters[0]]
+    best_lambda = lambdas[best_parameters[1]]
     
-    idx_min_acc = np.argmin(accuracy)
-    lambda_optimal = lambdas[idx_min_acc]
-    
-    return lambda_optimal
+    return best_degree, best_lambda
