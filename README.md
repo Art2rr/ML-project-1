@@ -10,10 +10,10 @@ Data processing consists of grouping the data based on their jet number in order
 The availible code allows for construction of following ML models: least square gradient descent, least square stochastic gradient descent, ridge regression, logistic regression gradiend descent and logistic regression stochastic gradient descent. For each method a function returns the optimised weights of the features and the loss value for these values. The loss function for least squares and ridge regression is mean squared error and the loss function for logistic regression is the negative log likelihood (for binary classification between {0,1})
 
 ## Hyperparametr Optimisation
-all of the ML methods can be optimised with regards to the degree of the polynomial to which the features are raised. Additionally, ridge regression and logistic regresion can be optimised with respect to reguralisation parameter lambda. The two hyperparameters can be optimised using k-fold cross validation on the training set. Implemented functions allow for testing different values of lambda and degree at the same time.
+All of the ML methods can be optimised with regards to the degree of the polynomial to which the features are raised. Additionally, ridge regression and logistic regresion can be optimised with respect to reguralisation parameter lambda. The two hyperparameters can be optimised using k-fold cross validation on the training set. Implemented functions allow for testing different values of lambda and degree at the same time.
 
 ## Classification Prediction
-the _run.py_ script can be used to generate the prediction of classification for a test data (by default _test.csv_) given the pre-classified training data (by default _train.csv_). imput and output data are classifed between {-1,1}.
+The _run.py_ script can be used to generate the prediction of classification for a test data (by default _test.csv_) given the pre-classified training data (by default _train.csv_). imput and output data are classifed between {-1,1}.
 
 ## Files
 
