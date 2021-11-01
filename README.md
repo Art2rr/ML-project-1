@@ -36,3 +36,7 @@ Individual functions are availible in following files:
 * **run.py** - script allowing to process data, build and optimise the ML model, and use it to predict the classification. The run.py contains the model resulting in the best accuracy, obtained with l2-regularised normal equations.
 
 * **project1.ipynb** - notebook with the optimisation of hyperparameters and plotting the graphs for the paper.
+
+## Report
+
+For convenience, the pdf file containing the written report is also included in the GitHub repository.
