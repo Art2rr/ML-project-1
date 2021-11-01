@@ -7,6 +7,7 @@ import numpy as np
 from proj1_helpers import *
 from implementations import *
 from data_processing import *
+from hyperparameters import *
 
 """ Download training data """
 DATA_TRAIN_PATH = 'train.csv'
