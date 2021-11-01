@@ -66,6 +66,6 @@ for jet in possible_jets:
     test_offset = build_poly(processed_tX_test[jet], degrees[jet])
     
     # Create preditions for each jet number
-    y_pred[jet_num_idx[jet][0]] = predict_labels(w_optimal[jet], test_offset)
+    y_pred[jet_num_idx[jet][0]] = predict_labels(w_RR[jet], test_offset)
 
 create_csv_submission(ids_test, y_pred, OUTPUT_PATH)
