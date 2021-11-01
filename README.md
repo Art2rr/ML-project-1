@@ -37,6 +37,10 @@ Individual functions are availible in following files:
 
 * **project1.ipynb** - notebook with the optimisation of hyperparameters and plotting the graphs for the paper.
 
+## Visualisation 
+
+In the repository, a folder is included which contains a data matrix with the error and accuracy values for degree = 3 for the different jet groups for a range of lambdas which is defined in the corresponding notebook. The code used to generate the figures in the report and the figures themselves are included here as well. Please note that the matplotlib library was used here, but solely for visualisation purposes.
+
 ## Report
 
 For convenience, the pdf file containing the written report is also included in the GitHub repository.
