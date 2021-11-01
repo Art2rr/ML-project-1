@@ -28,6 +28,6 @@ def penalized_logistic_regression(y, tx, w, lambda_):
     """return the loss and gradient for logistic regression. loss value has a penalty dependent of lambda"""
     penalty = np.squeeze(lambda_*w.T.dot(w))
     loss = calculate_loss(y,tx,w) + penalty 
-    grad = calculate_gradient(y,tx,w)
+    grad = calculate_gradient(y,tx,w) + 2*lambda_*w
     return loss, grad
 

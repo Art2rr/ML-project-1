@@ -97,8 +97,8 @@ def logistic_cross_validation(y, x, k_indices, k, gamma, lambda_, degree):
 
 def logistic_optimisation(y,x,k,gamma,seed=1):
     '''finds the optimal value of lambda by performing cross-validation for lambda values from 1e-4 to 1 '''
-    lambdas = np.logspace(-3,1,5)
-    degrees = range(1,5)
+    lambdas = np.logspace(-2,1,4)
+    degrees = [3] #range(1,4)
     
     
     k_indices = build_k_indices(y,k,seed)
@@ -115,8 +115,8 @@ def logistic_optimisation(y,x,k,gamma,seed=1):
 
             min_testerror[idx_degree,idx_lambda] = np.mean(accuracy_intermediate)
     
-    best_parameters = np.unravel_index(np.argmin(min_testerror, axis=None), min_testerror.shape)
+    best_parameters = np.unravel_index(np.argmax(min_testerror, axis=None), min_testerror.shape)
     best_degree = degrees[best_parameters[0]]
     best_lambda = lambdas[best_parameters[1]]
     
-    return best_degree, best_lambda
+    return best_degree, best_lambda, min_testerror
