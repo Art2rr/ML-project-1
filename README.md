@@ -1,5 +1,7 @@
 # ML-project-1
 
+**The final submission for the project can be found in the folder FIANL_SUBMISSION**
+
 The project consists of implementation of following machine learning methods: Linear regression using gradient descent, Linear regression using stochastic gradient descent, Least squares regression using normal equations, Ridge regression using normal equations, Logistic regression using gradient descent, Regularized logistic regression using gradient descent. These methods are used to create a machine learing model for the ML higgs challenge (Project 1 of CS-433 EPFL course). The challenge details: https://www.aicrowd.com/challenges/epfl-machine-learning-higgs.
 The project includes the code for implementation of ML methods, data processing, hyperparameter optimisation and classification prediction using constructed models. The model that produced the best predictions can be accessed by running _run.py_ file (by default this constructs the model with pre-optimised hyperparameters). The whole processed can be accessed on the notebook file _project1.ipynb_.
 
