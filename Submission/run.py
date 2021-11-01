@@ -46,7 +46,7 @@ jet_num_idx = grouping(tX_test)
 tx_imp = tX_test
 tx_imp[:, 0] = np.where(tx_imp[:, 0] == -999, most_frq_mass, tx_imp[:, 0])
 tx_imp[jet_num_idx[0], :] = np.where(tx_imp[jet_num_idx[0], :] == -999, 0, tx_imp[jet_num_idx[0], :])
-    tx_imp[jet_num_idx[1], :] = np.where(tx_imp[jet_num_idx[1], :] == -999, 0, tx_imp[jet_num_idx[1], :])
+tx_imp[jet_num_idx[1], :] = np.where(tx_imp[jet_num_idx[1], :] == -999, 0, tx_imp[jet_num_idx[1], :])
 
 """ Create predictions """
 OUTPUT_PATH = 'predictions.csv'
