@@ -34,3 +34,5 @@ Individual functions are availible in following files:
 * **proj1_helpers** - functions to load data and save predictions. function to predict classification.
 
 * **run.py** - script allowing to process data, build and optimise the ML model, and use it to predict the classification
+
+* **project1.ipynb** - notebook with the optimisation of hyperparameters and plotting the graphs for the paper
