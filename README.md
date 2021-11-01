@@ -11,7 +11,7 @@ Data processing consists of grouping the data based on their jet number in order
 ## ML models
 The availible code allows for construction of following ML models: Linear regression using gradient descent, Linear regression using stochastic gradient descent, Least squares regression using normal equations, Ridge regression using normal equations, Logistic regression using gradient descent, Regularized logistic regression using gradient descent. For each method a function returns the optimised weights of the features and the loss value for these values. The loss function for the first four implementations is mean squared error and the loss function for logistic regression is the negative log likelihood (for binary classification between {0,1})
 
-## Hyperparametr Optimisation
+## Hyperparameter Optimisation
 The ML methods can be optimised with regards to the degree of the polynomial to which the features are raised. Additionally, ridge regression and logistic regression can be optimised with respect to reguralisation parameter lambda. The two hyperparameters can be optimised using k-fold cross validation on the training set. Implemented functions allow for testing different values of lambda and degree at the same time.
 
 ## Classification Prediction
